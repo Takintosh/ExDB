@@ -1,0 +1,23 @@
+<!-- menu_layout.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_registrar_alumno"
+        android:title="Registrar Alumno"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar" />
+    <item
+        android:id="@+id/action_listar_alumnos"
+        android:title="Listar Alumnos"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar" />
+    <item
+        android:id="@+id/action_registrar_asignatura"
+        android:title="Registrar Asignatura"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar" />
+    <item
+        android:id="@+id/action_listar_asignaturas"
+        android:title="Listar Asignaturas"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar" />
+    <item
+        android:id="@+id/action_matricular_alumnos"
+        android:title="Matricular Alumnos"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar" />
+</menu>
