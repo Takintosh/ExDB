@@ -55,5 +55,28 @@ public class MatriculaDAO {
         return asignaturasMatriculadas;
     }
 
+    public List<Alumno> listarAlumnosMatriculados(Asignatura asignatura) {
+        List<Alumno> alumnosMatriculados = new ArrayList<>();
+
+        String query = "SELECT alumnos.nombre, alumnos.apellido FROM alumnos " +
+                "INNER JOIN matriculas ON alumnos.id = matriculas.id_alumno " +
+                "WHERE matriculas.id_asignatura = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(asignatura.getId())});
+
+        // Itera sobre el cursor y crea objetos Alumnos con los datos obtenidos
+        while (cursor.moveToNext()) {
+            String nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"));
+            String apellido = cursor.getString(cursor.getColumnIndexOrThrow("apellido"));
+
+            Alumno alumno = new Alumno(nombre, apellido);
+
+            alumnosMatriculados.add(alumno);
+        }
+
+        cursor.close();
+        return alumnosMatriculados;
+    }
+
 
 }

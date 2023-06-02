@@ -2,6 +2,8 @@ package com.example.exdb;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -21,6 +23,8 @@ public class DetalleAlumnoActivity extends OptionsMenuHandler {
     private String textNombre;
     private String textApellido;
     private String nombreCompleto = "Alumno";
+    private RecyclerView recyclerView;
+    private AsignaturaAdapter asignaturaAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +65,11 @@ public class DetalleAlumnoActivity extends OptionsMenuHandler {
         MatriculaDAO matriculaDAO = new MatriculaDAO(dbHelper.getReadableDatabase());
         List<Asignatura> asignaturasMatriculadas = matriculaDAO.listarMatriculasPorAlumno(alumno);
 
-        LinearLayout linearAsignaturas = findViewById(R.id.linearAsignaturas);
-
-        for (Asignatura asignatura : asignaturasMatriculadas) {
-            TextView textViewAsignatura = new TextView(this);
-            textViewAsignatura.setText(asignatura.getNombre());
-
-            linearAsignaturas.addView(textViewAsignatura);
-        }
+        recyclerView = findViewById(R.id.recyclerViewAsignaturas);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        asignaturaAdapter = new AsignaturaAdapter(null);
+        recyclerView.setAdapter(asignaturaAdapter);
+        asignaturaAdapter.setAsignaturas(asignaturasMatriculadas);
 
     }
 
