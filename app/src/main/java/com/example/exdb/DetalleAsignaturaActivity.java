@@ -1,6 +1,5 @@
 package com.example.exdb;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.exdb.data.AsignaturaDAO;
 import com.example.exdb.data.MatriculaDAO;
@@ -31,6 +29,18 @@ public class DetalleAsignaturaActivity extends OptionsMenuHandler {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_asignatura);
 
+        // Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (toolbar!=null) {
+            Log.d(TAG, "no null");
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            TextView toolbarTitle = findViewById(R.id.toolbar_title);
+            toolbarTitle.setText("Listar Alumnos");
+        } else {
+            Log.d(TAG, "é null, otario");
+        }
+
         // Obtener objeto Asignatura desde el Intent
         Asignatura asignatura = (Asignatura) getIntent().getSerializableExtra("asignatura");
 
@@ -51,18 +61,6 @@ public class DetalleAsignaturaActivity extends OptionsMenuHandler {
         alumnoAdapter = new AlumnoAdapter(null);
         recyclerView.setAdapter(alumnoAdapter);
         alumnoAdapter.setAlumnos(alumnosMatriculados);
-
-        // Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (toolbar!=null) {
-            Log.d(TAG, "no null");
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            TextView toolbarTitle = findViewById(R.id.toolbar_title);
-            toolbarTitle.setText("Listar Alumnos");
-        } else {
-            Log.d(TAG, "é null, otario");
-        }
 
     }
 }
