@@ -23,10 +23,4 @@ public class MainActivity extends OptionsMenuHandler {
         toolbarTitle.setText("ExDB - Mobile 1");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_layout, menu);
-        return true;
-    }
-
 }

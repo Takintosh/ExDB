@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,8 @@ public class DetalleAsignaturaActivity extends OptionsMenuHandler {
     private RecyclerView recyclerView;
     private AlumnoAdapter alumnoAdapter;
 
+    private static final String TAG = "log";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,28 +34,17 @@ public class DetalleAsignaturaActivity extends OptionsMenuHandler {
         // Obtener objeto Asignatura desde el Intent
         Asignatura asignatura = (Asignatura) getIntent().getSerializableExtra("asignatura");
 
-        // Verificar si no viene nulo
-        if(asignatura == null) {
-            Toast.makeText(this, "Objeto Asignatura nulo", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-
         // Crear instancia de DatabaseHelper y AsignaturaDAO
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         AsignaturaDAO asignaturaDAO = new AsignaturaDAO(dbHelper.getWritableDatabase());
+        MatriculaDAO matriculaDAO = new MatriculaDAO(dbHelper.getReadableDatabase());
+        List<Alumno> alumnosMatriculados = matriculaDAO.listarAlumnosMatriculados(asignatura);
 
         // Obtener detalles de la Asignatura
         asignatura = asignaturaDAO.obtenerAsignatura(asignatura.getId());
-
         // Mostrar detalles de la asignatura
-        if (asignatura != null) {
-            textNombre = asignatura.getNombre();
-            textDocente = asignatura.getDocente();
-        }
-
-        MatriculaDAO matriculaDAO = new MatriculaDAO(dbHelper.getReadableDatabase());
-        List<Alumno> alumnosMatriculados = matriculaDAO.listarAlumnosMatriculados(asignatura);
+        textNombre = asignatura.getNombre();
+        textDocente = asignatura.getDocente();
 
         recyclerView = findViewById(R.id.recyclerViewAlumnos);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -63,21 +55,14 @@ public class DetalleAsignaturaActivity extends OptionsMenuHandler {
         // Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar!=null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(textNombre);
-        }
-
-        /*
-        if(toolbar!=null) {
+        if (toolbar!=null) {
+            Log.d(TAG, "no null");
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             TextView toolbarTitle = findViewById(R.id.toolbar_title);
-            toolbarTitle.setText(textNombre);
+            toolbarTitle.setText("Listar Alumnos");
+        } else {
+            Log.d(TAG, "é null, otario");
         }
-
-         */
 
     }
 }
